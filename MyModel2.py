@@ -21,6 +21,8 @@ from model import LinearLayer
 # from dataset import VisaDataset, MVTecDataset, MVTec_locoDataset
 from prompt_ensemble import encode_text_with_prompt_ensemble
 
+from torchvision.transforms import v2
+
 FEATURES_LIST = [6, 12, 18, 24]
 IMAGE_SIZE = 518
 BACKBONE = 'ViT-L-14-336'
@@ -48,12 +50,18 @@ class MyModel(nn.Module):
         self.mem_features = None
         self.mode = 'test'
         
-        self.transform = transforms.Compose(
-            [   
-                transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
-                transforms.CenterCrop(IMAGE_SIZE),
-                transforms.ToTensor()
-            ]
+        # self.transform = transforms.Compose(
+        #     [   
+        #         transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+        #         transforms.CenterCrop(IMAGE_SIZE),
+        #         transforms.ToTensor()
+        #     ]
+        # )
+        
+        self.transform = v2.Compose(
+            [
+                v2.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+            ],
         )
         
         self.model, _, preprocess = open_clip.create_model_and_transforms(BACKBONE, IMAGE_SIZE, pretrained=PRETRAINED)
