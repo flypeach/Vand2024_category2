@@ -61,6 +61,7 @@ class MyModel(nn.Module):
         self.transform = v2.Compose(
             [
                 v2.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+                v2.CenterCrop((IMAGE_SIZE, IMAGE_SIZE)),
             ],
         )
         
