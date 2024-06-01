@@ -19,7 +19,7 @@ import open_clip
 # from few_shot import memory
 from model import LinearLayer
 # from dataset import VisaDataset, MVTecDataset, MVTec_locoDataset
-from prompt_ensemble import encode_text_with_prompt_ensemble
+from prompt_ensemble_anovl import encode_text_with_prompt_ensemble
 
 from torchvision.transforms import v2
 
@@ -86,7 +86,7 @@ class MyModel(nn.Module):
                               len(FEATURES_LIST), BACKBONE).to(DEVICE)
         
         with torch.cuda.amp.autocast(), torch.no_grad():
-            text_prompts = encode_text_with_prompt_ensemble(self.model, OBJ_LIST, self.tokenizer, DEVICE)
+            text_prompts, text_prompts_list = encode_text_with_prompt_ensemble(self.model, OBJ_LIST, self.tokenizer, DEVICE)
             
         pred_score = 0
         if self.mode == 'train':
